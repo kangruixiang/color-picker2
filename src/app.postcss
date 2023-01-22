@@ -1,0 +1,76 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	min-height: 100vh;
+	margin: 0;
+}
+
+@font-face {
+	font-family: 'Concourse_3';
+	src: url('/concourse_3_regular.woff2') format('woff2');
+	font-style: normal;
+	font-variant-numeric: oldstyle-nums;
+}
+@font-face {
+	font-family: 'Concourse_4';
+	src: url('/concourse_4_regular.woff2') format('woff2');
+	font-style: normal;
+	font-variant-numeric: oldstyle-nums;
+}
+@font-face {
+	font-family: 'Equity';
+	src: url('/equity_a_regular.woff2') format('woff2');
+	font-style: normal;
+	font-variant-numeric: oldstyle-nums;
+}
+@layer components {
+	body {
+		@apply text-zinc-800 text-base bg-stone-50;
+	}
+	img {
+		@apply border rounded-md block mx-auto;
+	}
+	h1 {
+		@apply mb-4 text-xl font-bold uppercase;
+	}
+	h2 {
+		@apply mb-2 text-lg font-bold uppercase;
+	}
+	p {
+		@apply font-serif text-xl text-zinc-800;
+	}
+	ul,
+	ol {
+		@apply font-serif text-xl;
+	}
+	::selection {
+		@apply bg-slate-200 text-zinc-800;
+	}
+	.btn {
+		@apply py-2 font-sans text-base font-semibold  rounded-lg shadow btn-disabled bg-zinc-50 hover:bg-white text-zinc-800 hover:text-black;
+	}
+	.btn-dark {
+		@apply transition duration-300 border-0 btn bg-zinc-800 text-zinc-50 hover:bg-zinc-900 hover:text-white;
+	}
+	.btn-disabled {
+		@apply disabled:text-zinc-500 disabled:hover:text-zinc-500 disabled:bg-zinc-50 disabled:hover:bg-zinc-50 disabled:border-zinc-500 disabled:hover:border-zinc-500;
+	}
+	.select {
+		@apply font-semibold border-2 border-solid rounded-md outline-none focus:outline-none focus:bg-white focus:border-zinc-800 border-zinc-800 bg-zinc-50 text-zinc-800 focus:ring-0;
+	}
+	.label {
+		@apply my-2 font-sans font-semibold;
+	}
+	.input-text {
+		@apply px-2 py-2 font-semibold rounded-md focus:ring-0  w-full focus:outline-none;
+	}
+	.input-checkbox {
+		@apply w-4 h-4 border-2 border-solid rounded-sm focus:ring-0 text-zinc-800 border-zinc-800;
+	}
+	.active {
+		@apply text-black underline;
+	}
+}
