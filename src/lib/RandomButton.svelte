@@ -1,9 +1,9 @@
 <script>
 	import { getContext } from 'svelte';
 	import { Motion } from 'svelte-motion';
+	import { satIncrement, valIncrement } from '$lib/stores.js';
 
 	const { hue, saturation, value } = getContext('colorContexts');
-	let { satIncrement, valIncrement } = getContext('colorContexts');
 
 	export let hoverColor, backgroundColor, textColor;
 
@@ -11,8 +11,8 @@
 		hue.set(Math.floor(Math.random() * 360));
 		saturation.set(Math.floor(Math.random() * 100));
 		value.set(Math.floor(Math.random() * 100));
-		satIncrement = Math.floor(Math.random() * 10);
-		valIncrement = Math.floor(Math.random() * 10);
+		$satIncrement = Math.floor(Math.random() * 10);
+		$valIncrement = Math.floor(Math.random() * 10);
 	}
 </script>
 

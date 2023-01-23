@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
 	import { setContext } from 'svelte';
+	import { scale } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { sineOut } from 'svelte/easing';
 
 	import Slider from '$lib/Slider.svelte';
 	import Alternate from '$lib/Alternate.svelte';
 	import RandomButton from '$lib/RandomButton.svelte';
+	import AddButton from '$lib/AddButton.svelte';
+	import ColorLibrary from '$lib/ColorLibrary.svelte';
+
+	import { valIncrement, satIncrement, hueIncrement, colorLibrary } from '$lib/stores.js';
 
 	const hue = tweened(Math.floor(Math.random() * 360), {
 		duration: 100,
@@ -22,17 +27,10 @@
 		easing: sineOut
 	});
 
-	let satIncrement = 5;
-	let valIncrement = 5;
-	let hueIncrement = 15;
-
 	const colorContexts = {
 		hue,
 		saturation,
-		value,
-		satIncrement,
-		valIncrement,
-		hueIncrement
+		value
 	};
 
 	setContext('colorContexts', colorContexts);
@@ -40,6 +38,7 @@
 	let textColor = '#e0e0e0';
 	let textColorLight = '#e0e0e0';
 	let textColorDark = '#11110d';
+	let showAddButton = false;
 
 	$: randomColor = hslToHex($hue, $saturation, $value);
 	$: saturation0 = hslToHex($hue, 0, $value);
@@ -49,18 +48,18 @@
 
 	let incrementList = [3, 2, 1, -1, -2, -3];
 	$: saturationAlt = incrementList.map((increment) => {
-		return Math.max(0, Math.min($saturation - increment * satIncrement, 100));
+		return Math.max(0, Math.min($saturation - increment * $satIncrement, 100));
 	});
 	$: valueAlt = incrementList.map((increment) => {
-		return Math.max(0, Math.min($value + increment * valIncrement, 100));
+		return Math.max(0, Math.min($value + increment * $valIncrement, 100));
 	});
 	$: hueAlt = incrementList.map((increment) => {
-		return Math.max(0, Math.min($hue - increment * hueIncrement, 360));
+		return Math.max(0, Math.min($hue - increment * $hueIncrement, 360));
 	});
 
 	$: $value > 50 ? (textColor = textColorDark) : (textColor = textColorLight);
 
-	function hslToHex(h, s, l) {
+	function hslToHex(h: number, s: number, l: number) {
 		l /= 100;
 		let a = (s * Math.min(l, 1 - l)) / 100;
 		let f = (n) => {
@@ -73,7 +72,7 @@
 		return `#${f(0)}${f(8)}${f(4)}`;
 	}
 
-	function hexToHSL(H) {
+	function hexToHSL(H: string) {
 		// Convert hex to RGB first
 		let r = 0,
 			g = 0,
@@ -119,11 +118,15 @@
 		return 'hsl(' + h + ',' + s + '%,' + l + '%)';
 	}
 
-	async function copy(color) {
+	async function copy(color: string) {
 		await navigator.clipboard.writeText(color);
 	}
 
-	function changeColor(event) {
+	function changeColor(event: string) {
+		if (typeof event.detail != 'string') {
+			console.log(event.detail);
+			return;
+		}
 		hexToHSL(event.detail);
 	}
 </script>
@@ -138,7 +141,16 @@
 			<div
 				class="main-color rounded-t-md p-8 h-60 md:h-80 flex flex-col"
 				style="background-color: {randomColor}"
+				on:mouseenter={() => {
+					showAddButton = true;
+				}}
+				on:mouseleave={() => {
+					showAddButton = false;
+				}}
 			>
+				<div class="flex flex-end cursor-pointer justify-end">
+					<AddButton {showAddButton} {randomColor} />
+				</div>
 				<div class="placeholder grow" />
 				<div
 					class="color-input self-end flex items-center justify-center rounded-md"
@@ -244,7 +256,7 @@
 			/>
 			<div class="md:flex md:space-x-4">
 				<Slider
-					bind:data={satIncrement}
+					bind:data={$satIncrement}
 					background="background: linear-gradient(to right, #e0e0e0, 
 #11110d)"
 					min={0}
@@ -252,7 +264,7 @@
 					step={0.1}>Saturation Steps</Slider
 				>
 				<Slider
-					bind:data={valIncrement}
+					bind:data={$valIncrement}
 					background="background: linear-gradient(to right, #e0e0e0, 
 #11110d)"
 					min={0}
@@ -268,6 +280,11 @@
 				backgroundColor={hslToHex($hue, saturationAlt[5], valueAlt[5])}
 			/>
 		</div>
+		{#if $colorLibrary.length > 0}
+			<div transition:scale>
+				<ColorLibrary on:changeColor={changeColor} />
+			</div>
+		{/if}
 	</div>
 </main>
 
