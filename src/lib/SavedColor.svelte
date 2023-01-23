@@ -26,5 +26,4 @@
 	<div class="absolute top-0 right-0">
 		<DeleteButton {showDeleteButton} {color} />
 	</div>
-	{color}
 </div>
