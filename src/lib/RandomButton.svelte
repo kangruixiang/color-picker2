@@ -19,7 +19,7 @@
 <Motion whileTap={{ scale: 0.99 }} let:motion>
 	<button
 		use:motion
-		class="btn mt-8 randomButton"
+		class="btn rounded-md tracking-widest randomButton"
 		style="--hover-color: {hoverColor}; --text-color: {textColor}; --background-color: {backgroundColor}"
 		on:click={random}>Random</button
 	>

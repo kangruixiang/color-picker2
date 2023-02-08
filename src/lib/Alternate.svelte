@@ -9,15 +9,15 @@
 	}
 </script>
 
-<div class="flex flex-col text-white text-center lg:rounded-b-md">
-	<div class="h-20 cursor-pointer" on:click={sendData} style="background-color: {color}" />
+<div class="flex flex-col text-center bg-zinc-900">
+	<div class="h-96 cursor-pointer" on:click={sendData} style="background-color: {color}" />
 	<div>
 		{color}
 	</div>
 	<div>
 		S: {Math.round(saturationAlt)}
 	</div>
-	<div class="lg:rounded-b-md">
+	<div class="lg:rounded-b-md pb-2">
 		V: {Math.round(valueAlt)}
 	</div>
 </div>

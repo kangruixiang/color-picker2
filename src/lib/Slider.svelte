@@ -12,13 +12,13 @@
 	}
 </script>
 
-<div class="w-full">
+<div class="w-full text-zinc-300">
 	<label for="slider" class="label">
 		<slot />
 		<div class="flex space-x-4 items-center">
 			<input
 				type="range"
-				class="slider w-full appearance-none h-2 rounded-lg"
+				class="slider w-full appearance-none h-2 rounded-lg "
 				tabindex="-1"
 				style={background}
 				bind:value={data}
@@ -28,7 +28,7 @@
 			/>
 			<input
 				type="number"
-				class="input-text w-12"
+				class="input-text w-12 bg-zinc-800"
 				on:change={handleInput}
 				value={Math.round(data)}
 			/>
@@ -42,7 +42,7 @@
 		appearance: none;
 		width: 20px; /* Set a specific slider handle width */
 		height: 20px; /* Slider handle height */
-		background: #191919; /* Green background */
+		background: #f1f1f1; /* Green background */
 		cursor: pointer; /* Cursor on hover */
 		border-radius: 100%;
 		border: none;
@@ -51,7 +51,7 @@
 	.slider::-moz-range-thumb {
 		width: 20px; /* Set a specific slider handle width */
 		height: 20px; /* Slider handle height */
-		background: #191919; /* Green background */
+		background: #f1f1f1; /* Green background */
 		cursor: pointer; /* Cursor on hover */
 		border-radius: 100%;
 		border: none;
