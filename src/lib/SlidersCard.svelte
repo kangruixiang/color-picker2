@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { valIncrement, satIncrement, hueIncrement, colorLibrary } from '$lib/stores.js';
+	import { valIncrement, satIncrement } from '$lib/stores.js';
 	import Slider from '$lib/Slider.svelte';
-
-	import { hslToHex, hexToHSL } from '$lib/process';
 
 	export let hue: number,
 		saturation: number,
@@ -13,10 +11,10 @@
 		saturation100,
 		textColor;
 
-	$: saturationAlt = Math.max(0, Math.min(saturation - -2 * $satIncrement, 100));
-	$: valueAlt = Math.max(0, Math.min(value + -2 * $valIncrement, 100));
-	$: saturationAlt2 = Math.max(0, Math.min(saturation - -3 * $satIncrement, 100));
-	$: valueAlt2 = Math.max(0, Math.min(value + -3 * $valIncrement, 100));
+	// $: saturationAlt = Math.max(0, Math.min(saturation - -2 * $satIncrement, 100));
+	// $: valueAlt = Math.max(0, Math.min(value + -2 * $valIncrement, 100));
+	// $: saturationAlt2 = Math.max(0, Math.min(saturation - -3 * $satIncrement, 100));
+	// $: valueAlt2 = Math.max(0, Math.min(value + -3 * $valIncrement, 100));
 </script>
 
 <div class="sliders flex flex-col space-y-2">

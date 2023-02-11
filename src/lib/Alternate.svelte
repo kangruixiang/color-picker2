@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	export let color, saturationAlt, valueAlt;
+	export let color: string, saturationAlt: number, valueAlt: number;
 
 	const dispatch = createEventDispatcher();
 
@@ -10,7 +10,11 @@
 </script>
 
 <div class="flex flex-col text-center bg-zinc-900">
-	<div class="h-96 cursor-pointer" on:click={sendData} style="background-color: {color}" />
+	<div
+		class="h-20 md:h-40 xl:h-60 2xl:h-80 cursor-pointer"
+		on:click={sendData}
+		style="background-color: {color}"
+	/>
 	<div>
 		{color}
 	</div>

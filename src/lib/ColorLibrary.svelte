@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { scale, fade } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { createEventDispatcher } from 'svelte';
 
 	import { colorLibrary } from '$lib/stores.js';
 	import SavedColor from '$lib/SavedColor.svelte';
 
-	const dispatch = createEventDispatcher();
-
 	let showDeleteButton = false;
+
+	const dispatch = createEventDispatcher();
 
 	function sendData(color: string) {
 		dispatch('changeColor', color);

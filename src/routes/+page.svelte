@@ -4,20 +4,19 @@
 	import { tweened } from 'svelte/motion';
 	import { sineOut } from 'svelte/easing';
 
-	import Slider from '$lib/Slider.svelte';
 	import MainColor from '$lib/MainColor.svelte';
 	import RandomButton from '$lib/RandomButton.svelte';
-	import AddButton from '$lib/AddButton.svelte';
 	import ColorLibrary from '$lib/ColorLibrary.svelte';
 	import SlidersCard from '$lib/SlidersCard.svelte';
 	import { hslToHex, hexToHSL } from '$lib/process';
 
-	import { valIncrement, satIncrement, hueIncrement, colorLibrary } from '$lib/stores.js';
+	import { valIncrement, satIncrement, colorLibrary } from '$lib/stores.js';
 	import AlternateLibrary from '$lib/AlternateLibrary.svelte';
 
 	export let data;
 	console.log(data);
 
+	// construct initial hue, saturation, values
 	const hue = tweened(Math.floor(Math.random() * 360), {
 		duration: 100,
 		easing: sineOut
@@ -41,10 +40,10 @@
 
 	setContext('colorContexts', colorContexts);
 
+	// text color based on light or dark
 	let textColor = '#d4d4d8';
 	let textColorLight = '#d4d4d8';
 	let textColorDark = '#11110d';
-	let showAddButton = false;
 
 	$: randomColor = hslToHex($hue, $saturation, $value);
 	$: saturation0 = hslToHex($hue, 0, $value);
@@ -80,8 +79,8 @@
 	}
 </script>
 
-<main class="h-screen w-screen items-center justify-center flex bg-zinc-800 overflow-y-auto">
-	<div class="grow px-8 py-10">
+<main class="h-screen w-screen  flex bg-zinc-800">
+	<div class="grow">
 		<AlternateLibrary
 			hue={$hue}
 			saturation={$saturation}
@@ -90,7 +89,7 @@
 			on:changeColor={changeColor}
 		/>
 	</div>
-	<div class="w-96 flex flex-col min-h-screen space-y-8 bg-zinc-900 px-8 py-10 ">
+	<div class="w-96 flex flex-col h-screen space-y-8 bg-zinc-900 px-8 py-10 ">
 		<MainColor {textColor} {randomColor} />
 
 		<SlidersCard

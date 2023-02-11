@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import { scale } from 'svelte/transition';
 	import { colorLibrary } from '$lib/stores.js';
 
-	export let showDeleteButton, color;
+	export let showDeleteButton: Boolean, color: string;
 
 	function removeColor() {
 		console.log($colorLibrary[0], color);

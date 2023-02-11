@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Alternate from '$lib/Alternate.svelte';
-	import { hslToHex, hexToHSL } from '$lib/process';
+	import { hslToHex } from '$lib/process';
 	import { constArray } from '$lib/process';
-	import { valIncrement, satIncrement, hueIncrement, colorLibrary } from '$lib/stores.js';
-	import { createEventDispatcher } from 'svelte';
+	import { valIncrement, satIncrement } from '$lib/stores.js';
 
 	export let hue: number, saturation: number, value: number, randomColor;
 
@@ -17,9 +16,11 @@
 	});
 </script>
 
-<div class="text-zinc-300 grid lg:grid-cols-8 xl:grid-cols-12 w-full gap-y-4">
+<div
+	class="text-zinc-300 grid md:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-12 gap-y-4 overflow-y-auto h-screen py-10 px-8 auto-rows-min xl:content-center"
+>
 	{#each incrementList as step, i}
-		<div class="">
+		<div>
 			<Alternate
 				on:changeColor
 				color={hslToHex(hue, saturationAlt[i], valueAlt[i])}

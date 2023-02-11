@@ -2,12 +2,14 @@
 	import { getContext } from 'svelte';
 	import AddButton from '$lib/AddButton.svelte';
 	import { hslToHex, hexToHSL } from '$lib/process';
-	export let textColor, randomColor;
 	import { valIncrement, satIncrement } from '$lib/stores.js';
+
+	export let textColor, randomColor;
 
 	const { hue, saturation, value } = getContext('colorContexts');
 
 	let showAddButton = false;
+
 	$: saturationAlt = Math.max(0, Math.min($saturation - -1 * $satIncrement, 100));
 	$: valueAlt = Math.max(0, Math.min($value + -1 * $valIncrement, 100));
 
