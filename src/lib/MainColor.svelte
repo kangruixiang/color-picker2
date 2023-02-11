@@ -1,13 +1,23 @@
 <script lang="ts">
-	import RandomButton from '$lib/RandomButton.svelte';
+	import { getContext } from 'svelte';
 	import AddButton from '$lib/AddButton.svelte';
 	import { hslToHex, hexToHSL } from '$lib/process';
-	export let hue: number, saturation: number, value: number, textColor, randomColor;
-	import { valIncrement, satIncrement, hueIncrement, colorLibrary } from '$lib/stores.js';
+	export let textColor, randomColor;
+	import { valIncrement, satIncrement } from '$lib/stores.js';
+
+	const { hue, saturation, value } = getContext('colorContexts');
 
 	let showAddButton = false;
-	$: saturationAlt = Math.max(0, Math.min(saturation - -1 * $satIncrement, 100));
-	$: valueAlt = Math.max(0, Math.min(value + -1 * $valIncrement, 100));
+	$: saturationAlt = Math.max(0, Math.min($saturation - -1 * $satIncrement, 100));
+	$: valueAlt = Math.max(0, Math.min($value + -1 * $valIncrement, 100));
+
+	function changeColor(color: string) {
+		const { h, s, l } = hexToHSL(color);
+		console.log('returned', h, s, l);
+		hue.set(h);
+		saturation.set(s);
+		value.set(l);
+	}
 </script>
 
 <div class="color-portion lg:shadow-xl flex flex-col">
@@ -27,14 +37,14 @@
 		<div class="placeholder grow" />
 		<div
 			class="color-input self-end flex items-center justify-center rounded-md"
-			style="background-color: {hslToHex(hue, saturationAlt, valueAlt)}; color: {textColor}"
+			style="background-color: {hslToHex($hue, saturationAlt, valueAlt)}; color: {textColor}"
 		>
 			<input
 				type="text"
 				class="input-text pr-0 w-20 focus:border-0 focus:ring-0 text-center"
 				bind:value={randomColor}
-				on:change={() => hexToHSL(randomColor)}
-				style="background-color: {hslToHex(hue, saturationAlt, valueAlt)}; color: {textColor}"
+				on:change={changeColor(randomColor)}
+				style="background-color: {hslToHex($hue, saturationAlt, valueAlt)}; color: {textColor}"
 			/>
 			<div
 				class="cursor-pointer pr-1 rounded-r-md"

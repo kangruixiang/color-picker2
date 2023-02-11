@@ -91,7 +91,7 @@
 		/>
 	</div>
 	<div class="w-96 flex flex-col min-h-screen space-y-8 bg-zinc-900 px-8 py-10 ">
-		<MainColor hue={$hue} saturation={$saturation} value={$value} {textColor} {randomColor} />
+		<MainColor {textColor} {randomColor} />
 
 		<SlidersCard
 			bind:hue={$hue}
